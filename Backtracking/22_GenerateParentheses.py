@@ -15,3 +15,5 @@ class Solution(object):
                 left += 1
             for j in range(left):
                 tmp.append(')')
+            self.backtract(lst, tmp, 
+                )

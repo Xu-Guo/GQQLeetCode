@@ -1,4 +1,6 @@
 import copy
+
+
 class Solution(object):
 
     def restoreIpAddresses(self, s):
@@ -15,16 +17,15 @@ class Solution(object):
         if start == len(s) and len(tmplist) == 4:
             lst.append(".".join(copy.deepcopy(tmplist)))
         elif start < len(s) and len(tmplist) < 4:
-            for i in xrange(1, 4):
+            for i in range(1, 4):
                 if start + i > len(s):
                     continue
                 tmp = s[start:start + i]
-                print tmp
                 if self.fit_ip_address(tmp):
                     # print tmp
                     tmplist.append(tmp)
                     self.backtract(lst, tmplist, s, start + i)
-                    tmplist.remove(tmp)
+                    tmplist.pop()
 
     def fit_ip_address(self, s):
         if len(s) == 0 or len(s) >= 4:
@@ -34,8 +35,3 @@ class Solution(object):
         if int(s) < 0 or int(s) > 255:
             return False
         return True
-
-if __name__ == '__main__':
-    s = Solution()
-    lst = s.restoreIpAddresses('19216811')
-    print lst
