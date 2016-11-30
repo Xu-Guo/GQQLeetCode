@@ -4,16 +4,15 @@ class Solution(object):
         :type n: int
         :rtype: List[str]
         """
-    
-    def backtract(self, lst, tmp, n):
-        if len(tmp) == 2*n:
+        lst = []
+        self.backtrace(lst, '', 0, 0, n)
+        return lst
+        
+    def backtrace(self, lst, tmp, left, right, max):
+        if left + right == 2*max:
             lst.append(tmp)
         else:
-            left = 0
-            for i in range(0, n):
-                tmp.append('(')
-                left += 1
-            for j in range(left):
-                tmp.append(')')
-            self.backtract(lst, tmp, 
-                )
+            if left < max:
+                self.backtrace(lst, tmp + '(', left + 1, right, max)
+            if right < left:
+                self.backtrace(lst, tp + ')', left, rmight + 1, max)
