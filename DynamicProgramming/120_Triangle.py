@@ -5,17 +5,20 @@ class Solution(object):
         :type triangle: List[List[int]]
         :rtype: int
         """
-        lengh = len(triangle)
-        if lengh == 0:
-            return 0
-        lst_res = []
-        for row in triangle:
-            lst_res.append(min_val(row))
-        return sum(lst_res)
-
-    def min_val(row):
-        min_v = row[0]
-        for i in range(1, len(row)):
-            if row[i] < min_v:
-                min_v = row[i]
-        return min_v
+        t = triangle
+        if len(t) == 1:
+            return t[0][0]
+        ret = [0] * len(t)
+        ret[0] = t[0][0]
+        for i in range(1, len(t)):
+            for j in range(0, i + 1):
+                if j == 0:
+                    old_v = ret[j]
+                    ret[j] += t[i][j]
+                elif j == i:
+                    ret[j] = old_v + t[i][j]
+                else:
+                    val = min(old_v + t[i][j], ret[j] + t[i][j])
+                    old_v = ret[j]
+                    ret[j] = val
+        return min(ret)
