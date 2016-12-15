@@ -26,12 +26,11 @@ public class Solution {
                     break;
                 }
             }
-
+            
             if (p>=0 && q>=0) {
                 int val = bk(strs, p, q, curr+1, i+1);
                 max_v = Math.max(val, max_v);
             }
-
         }
         return max_v;
     }
