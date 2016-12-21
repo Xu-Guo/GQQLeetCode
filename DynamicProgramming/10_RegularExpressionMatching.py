@@ -13,7 +13,6 @@ class Solution(object):
             return self.isMatchNone(p)
 
         r = [[0 for x in range(n)] for y in range(m)]
-        print r
         src = s[0]
         for j in range(n):
             des = p[j]
@@ -21,28 +20,26 @@ class Solution(object):
                 if self.isMatchNone(p[0:j]):
                     r[0][j] = 1
             elif des == "*":
-                print j
-                if r[j - 1] == 1 or (j - 2 >= 0 and r[j - 2] == 1):
+                if r[0][j - 1] == 1 or (j - 2 >= 0 and r[0][j - 2] == 1):
                     r[0][j] = 1
+        # print r
         for i in range(1, m):
             src = s[i]
             for j in range(1, n):
                 des = p[j]
                 if des == src or des == ".":
-                    r[i][j] = r[i-1][j-1]
+                    r[i][j] = r[i - 1][j - 1]
                 elif des == "*":
-                    if r[j - 1] == 1 or (j - 2 >= 0 and r[j - 2] == 1):
+                    if r[i][j - 1] == 1 or (j - 2 >= 0 and r[i][j - 2] == 1):
                         r[i][j] = 1
-                    if src == p[j-1] and (r[i-1][j-1] == 1 or r[i-1][j] == 1):
+                    if (src == p[j - 1] or p[j - 1] == ".") and (r[i - 1][j - 1] == 1 or r[i - 1][j] == 1):
                         r[i][j] = 1
-        return True if r[m-1][n-1] == 1 else False
-
-
+        return True if r[m - 1][n - 1] == 1 else False
 
     def isMatchNone(self, p):
         if len(p) % 2 != 0:
             return False
-        for i in range(1, len(p) - 1, 2):
+        for i in range(1, len(p), 2):
             if p[i] != "*":
                 return False
         return True
