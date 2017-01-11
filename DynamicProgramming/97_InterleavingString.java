@@ -13,10 +13,19 @@ public class Solution {
             }
         }
 
-        for (int i=0; i<len1; i++) {
-            if (r[i]==1 && s1.charAt(i) == s3.charAt(i)) {
-                
+        for (int i=1; i<len1; i++) {
+            for (int j=0; j<len2; j++) {
+                int first = 1;
+                int second = 1;
+                if (!(r[j]==1 && s1.charAt(i-1) == s3.charAt(i+j-1))) {
+                    first = 0;
+                }
+                if (!(j>=1 && r[j-1]==1 && s2.charAt(j-1) == s3.charAt(i+j-1))) {
+                    second = 0;
+                }
+                r[j] = first | second;
             }
         }
+        return r[len2]==1 ? true : false;
     }
 }
