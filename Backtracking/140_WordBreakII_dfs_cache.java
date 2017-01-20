@@ -1,3 +1,5 @@
+// use return value dfs
+// please check the same question 131_PalindromePartitioning.py
 public class Solution {
     public List<String> wordBreak(String s, List<String> wordDict) {
         return DFS(s, wordDict, new HashMap<String, List<String>>());
