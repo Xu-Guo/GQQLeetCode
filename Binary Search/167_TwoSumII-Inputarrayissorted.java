@@ -5,24 +5,35 @@ public class Solution {
         if (n < 2) {
             return result;
         }
-        int low = 0, high = n - 1;
-        while (low < high - 1) {
-            int mid = low + (high - low) / 2;
-            if (target - numbers[mid] < numbers[mid]) {
-                if (target == numbers[low] + numbers[mid]) {
-                    result[0] = low;
-                    result[1] = mid;
-                    return result;
-                }
-                high = mid;
-            } else if(target - numbers[mid] > numbers[mid]) {
-                if (target == numbers[low] + numbers[mid]) {
-                    result[0] = low;
-                    result[1] = mid;
-                    return result;
-                }
-                high = mid;
+        int low = 0, high = n-1;
+        for (int i=low; i<high && numbers[i]<target; i++) {
+            if (numbers[i] + numbers[high] < target) {
+                continue;
+            }
+            int tp = findIndex(numbers, i+1, high, target-numbers[i]);
+            if (tp != -1) {
+                result[0] = i + 1;
+                result[1] = tp + 1;
+                return result;
             }
         }
+        return result;
+    }
+
+    private int findIndex(int[] numbers, int low, int high, int target) {
+        if (numbers[low] > target || numbers[high] < target) {
+            return -1;
+        }
+        while(low <= high) {
+            int mid = low + (high - low)/2;
+            if (numbers[mid] == target) {
+                return mid;
+            } else if (target < numbers[mid]) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return -1;
     }
 }
