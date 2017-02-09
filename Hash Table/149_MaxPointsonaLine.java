@@ -13,7 +13,10 @@ public class Solution {
         int n = points.length;
         if (n <= 2) return n;
         HashMap<NewPoint, Integer> map = new HashMap<>();
-        
+        for (Point point : points) {
+            NewPoint np = new NewPoint(point.x, point.y);
+        }
+
         for (int i = 0; i < n - 1; i++) {
             for (int j = i + 1; j < n; j++) {
                 int currNum = 2;
