@@ -12,5 +12,7 @@ public class Solution {
         UndirectedGraphNode newnode = new UndirectedGraphNode(node.label);
         // List<UndirectedGraphNode> neighbors = node.neighbors;
         new.neighbors = new ArrayList<>(node.neighbors);
+
     }
+    public void copyOne(UndirectedGraphNode node, )
 }
