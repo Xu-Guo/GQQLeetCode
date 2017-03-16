@@ -40,7 +40,7 @@ public class LRUCache {
     }
 
     public void updatemin() {
-        if (min <= max && !proToKey.containsKey(min)) min++;
+        while (min <= max && !proToKey.containsKey(min)) min++;
     }
 }
 
