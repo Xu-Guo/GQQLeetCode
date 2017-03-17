@@ -13,15 +13,16 @@ public class Solution {
         queue.offer(root);
         while (!queue.isEmpty()) {
             int size = queue.size();
-            TreeLinkNode pre = queue.poll();
-            for (int i = 1; i < size; i++) {
+            TreeLinkNode pre = null;
+            for (int i = 0; i < size; i++) {
                 TreeLinkNode after = queue.poll();
                 if (after.left != null) queue.offer(after.left);
                 if (after.right != null) queue.offer(after.right);
-                pre.next = after;
+                if (pre != null)
+                    pre.next = after;
                 pre = after;
             }
-
+            pre.next = null;
         }
     }
 }
