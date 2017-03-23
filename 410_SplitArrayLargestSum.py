@@ -8,13 +8,20 @@ class Solution(object):
         """
         if len(nums) == 0:
             return 0
+        n = len(nums)
+        ret = max(nums)
+        if m == n:
+            return ret
 
-    def helper(self, nums, m, start, nlen):
-        if m > nlen:
-            return 0
-        if m == 1:
-            # return from start to end
-            return sum(nums[start: nlen])
-        for i in range(start, :
-            pass
-
+        for i in range(1, n - m):
+            minval = sys.maxint
+            minidx = -1
+            for j in range(0, n - i):
+                if nums[j] + nums[j + 1] < imin:
+                    minidx, minval = j, nums[j] + nums[j + 1]
+            # [0 : minidx - 1] original value
+            nums[minidx] = minval
+            for j in range(minidx + 1, n - i):
+                nums[j] = nums[j + 1]
+            ret = max(ret, minval)
+        return ret
