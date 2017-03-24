@@ -28,8 +28,6 @@ public class Solution {
         p.left.next = p.right;
         if (pnext != null) {
             p.right.next = pnext.left;
-        } else {
-            p.right.next = null;
         }
     }
 }

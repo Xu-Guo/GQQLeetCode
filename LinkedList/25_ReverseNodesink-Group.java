@@ -16,8 +16,8 @@ public class Solution {
         boolean needReverse = true;
         for (int i = 0; i < k; i++) {
             if (tail == null) {
-                    needReverse = false;
-                    break;
+                needReverse = false;
+                break;
             }
             tail = tail.next;
         }
