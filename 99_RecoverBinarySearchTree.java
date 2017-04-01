@@ -8,41 +8,34 @@
  * }
  */
 public class Solution {
-    boolean isok = false;
     public void recoverTree(TreeNode root) {
-        if (root == null) {
-            return;
+        TreeNode first = null;
+        TreeNode second = null;
+        TreeNode pre = null;
+        Stack<TreeNode> st = new Stack<>();
+        TreeNode node = root;
+        while (node != null || !st.isEmpty()) {
+            if (node == null) {
+                TreeNode tn = st.pop();
+                if (second != null) {
+                    if (tn.val < second.val) {
+                        second = tn;
+                    }
+                } else if (pre != null && pre.val > tn.val) {
+                    first = pre;
+                    second = tn;
+                }
+                pre = tn;
+                node = tn.right;
+            } else {
+                st.push(node);
+                node = node.left;
+            }
         }
-        findError(root, true, Integer.MIN_VAL);
-        // findError(root.right, true, root.val);
-    }
-
-    public TreeNode findError(TreeNode root, boolean isBigger, int pVal) {
-        if (isok) return null;
-        if (root == null) return null;
-        if (isBigger) {
-            if (root.val < pVal) return root;
-        }
-        if (!isBigger) {
-            if (root.val > pVal) return root;
-        }
-        TreeNode leftErr = findError(root.left, false, root.val);
-        TreeNode rightErr = findError(root.right, true, root.val);
-        if (leftErr != null && rightErr != null) {
-            int temp = leftErr.val;
-            leftErr.val = rightErr.val;
-            rightErr.val = temp;
-            isok = true;
-        } else if (leftErr != null) {
-            int temp = leftErr.val;
-            leftErr.val = root.val;
-            root.val = temp;
-            isok = true;
-        } else if (rightErr != null) {
-            int temp = rightErr.val;
-            rightErr.val = root.val;
-            root.val = temp;
-            isok = true;
+        if (first != null && second != null) {
+            int tmp = first.val;
+            first.val = second.val;
+            second.val = tmp;
         }
     }
 }
