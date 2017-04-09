@@ -1,23 +1,22 @@
 public class Solution {
     public List<String> wordBreak(String s, List<String> wordDict) {
-        Map<Integer, List<String>> cache = new HashMap<>();
-        List<String> res = new ArrayList<String>();
-        helper2(s, wordDict, "", res, 0, cache);
-        return res;
-    }
+        int n = s.length();
+        int m = wordDict.size();
+        if (m == 0 || n == 0) return new ArrayList<String>();
+        ArrayList<String>[] res = new ArrayList[n + 1];
+        for (int i = 0; i < n+ 1; i++) {
+            res[i] = new ArrayList<String>();
+        }
 
-    public List<String> helper(String s, List<String> wordDict, int start, Map<Integer, List<String>> cache) {
-        if (cache.containsKey(start)) return cache.get(start);
-        List<String> res = new ArrayList<String>();
-        for (int i = start + 1; i <= s.length(); i++) {
-            String pre = s.substring(start, i);
-            if (wordDict.contains(pre)) {
-                if (i == s.length()) {
-                    res.add(pre);
-                } else {
-                    List<String> subStrs = helper(s, wordDict, i, cache);
-                    for (String sub : subStrs) {
-                        res.add(pre + " " + sub);
+        for (int i = n - 1; i >= 0; i--) {
+            String sub = s.substring(i);
+            for (String word : wordDict) {
+                if (sub.equals(word)) {
+                    res[i].add(word);
+                } else if (sub.startsWith(word)) {
+                    List<String> preStrings = res[i + word.length()];
+                    for (String pre : preStrings) {
+                        res[i].add(word + " " + pre);
                     }
                 }
             }
@@ -42,5 +41,6 @@ public class Solution {
             }
         }
         cache.put(start, res);
+        return res[0];
     }
 }
