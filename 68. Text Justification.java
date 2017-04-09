@@ -3,41 +3,43 @@ public class Solution {
         List<String> res = new ArrayList<>();
         System.out.println(words.length);
         if (words == null || words.length == 0) return res;
-        StringBuilder sb = new StringBuilder();
+        ArrayList<String> list = new ArrayList<String>();
+        int len = 0;
         int i = 0;
         while (i < words.length) {
-            String str = "";
-            str = sb.length() == 0 ? (words[i].length() == 0 ? " " : words[i]) : " " + (words[i].length() == 0 ? " " : words[i]);
-            int len = sb.length() + str.length();
+            len += list.size() == 0 ? words[i].length() : words[i].length() + 1;
+            // System.out.println(len);
             if (len == maxWidth) {
-                sb.append(str);
-                res.add(sb.toString());
-                sb.setLength(0);
+                list.add(words[i]);
+                res.add(String.join(" ", list));
                 i++;
+                len = 0;
+                list.clear();
             } else if (len > maxWidth) {
-                justfy(res, sb.toString(), maxWidth);
-                sb.setLength(0);
+                justfy(res, list, maxWidth);
+                len = 0;
+                list.clear();
             } else {
-                sb.append(str);
+                list.add(words[i]);
+                if (i == words.length - 1) {
+                    StringBuilder sb = new StringBuilder();
+                    int gap = maxWidth - len;
+                    for (int j = 0; j < gap; j++) {
+                        sb.append(" ");
+                    }
+                    res.add(String.join(" ", list) + sb.toString());
+                }
                 i++;
             }
-        }
-        if (sb.length() > 0) {
-            int gap = maxWidth - sb.length();
-            for (int j = 0; j < gap; j++) {
-                sb.append(" ");
-            }
-            res.add(sb.toString());
         }
         return res;
     }
 
-    public void justfy(List<String> res, String str, int maxWidth) {
+    public void justfy(List<String> res, List<String> list, int maxWidth) {
         // This    is   ban
-        String[] strs = str.split(" ");
-        if (strs.length == 1) {
+        if (list.size() == 1) {
             StringBuilder sb = new StringBuilder();
-            sb.append(strs[0]);
+            sb.append(list.get(0));
             int gap = maxWidth - sb.length();
             for (int i = 0; i < gap; i++) {
                 sb.append(" ");
@@ -47,16 +49,16 @@ public class Solution {
         } 
 
         int len = 0;
-        for (String s : strs) {
+        for (String s : list) {
             len += s.length();
         }
         int remainlen = maxWidth - len;
-        int m = strs.length - 1;
+        int m = list.size() - 1;
         int cnt = remainlen / m;
         int remains = remainlen % m;
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < m; i++) {
-            sb.append(strs[i]);
+            sb.append(list.get(i));
             for (int j = 0; j < cnt; j++) {
                 sb.append(" ");
             }
@@ -64,7 +66,7 @@ public class Solution {
                 sb.append(" ");
             }
         }
-        sb.append(strs[m]);
+        sb.append(list.get(m));
         res.add(sb.toString());
     }
 }
