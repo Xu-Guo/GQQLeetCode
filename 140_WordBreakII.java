@@ -21,6 +21,26 @@ public class Solution {
                 }
             }
         }
+        cache.put(start, res);
+        return res;
+    }
+
+    public void helper2(String s, List<String> wordDict, String tmp, List<String> res, int start, Map<Integer, List<String>> cache) {
+        if (cache.containsKey(start)) {
+            res = cache.get(start);
+            return;
+        }
+        if (start == s.length()) {
+            res.add(tmp.trim());
+            return;
+        }
+        for (int i = start + 1; i <= s.length(); i++) {
+            String pre = s.substring(start, i);
+            if (wordDict.contains(pre)) {
+                helper2(s, wordDict, tmp + pre + " ", res, i, cache);
+            }
+        }
+        cache.put(start, res);
         return res[0];
     }
 }
